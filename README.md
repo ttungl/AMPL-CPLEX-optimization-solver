@@ -81,7 +81,7 @@ where the bounds of literals and decision variables are in between 0 and 1.
 
 In this section, we apply the optimization solvers to solve the problem. We configure a specific scenario to demonstrate how it works [3]. Assume that we have a set of tasks including 5 tasks, which will be assigned to a set of servers including 3 servers as illustrated below.
 
-<img width="550" src="https://github.com/ttungl/AMPL-CPLEX-optimization-solver/blob/master/images/ampl3.png">
+<img width="350" src="https://github.com/ttungl/AMPL-CPLEX-optimization-solver/blob/master/images/ampl3.png">
 
 Figure 3. An example.
 
@@ -109,8 +109,11 @@ Figure 4: Simulation result
 We first modeled a system with task scheduling problem as a max-sat problem, then translated it into the integer linear programming (ILP) problem. We used the MIP solvers to solve the problem. Simulation results demonstrated that the tasks assigned on servers are optimal in some solvers, leading to the high utilization in distributed systems. 
 
 **References**
+
 [1] C. Ansótegui, J. Gabàs, Solving (Weighted) Partial MaxSAT with ILP, CPAIOR2013.
+
 [2] www.neos-server.org
+
 [3] www.ampl.com 
 
 
