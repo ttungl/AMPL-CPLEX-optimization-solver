@@ -1,0 +1,8 @@
+solve;
+display Total_Cost;
+display T_assign;
+for {(i,j) in ARCS} {	
+	if T_assign[i,j]>0 then {
+		printf "T_assign: t%d s%d: %d\n", i, j, T_assign[i,j];	
+	}		
+}
