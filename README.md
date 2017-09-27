@@ -10,7 +10,7 @@
 **Abstract**: As resources in distributed systems need to be efficiently exploited, the economic energy can be achieved. One of the challenges in resource allocation is task scheduling where tasks can be assigned optimally to gain a low energy consumption, high utilization, and low response time in term of fewer tasks cross the deadlines. In this work, we model a system with task scheduling problem as a max-sat problem and translate it into the integer linear programming (ILP) problem. From this translated problem, we use the optimization solvers to solve the problem. Our simulation results show that the tasks assigned on servers are optimal, leading to the high utilization in distributed systems. 
 
 
-**Introduction**
+**I. Introduction**
 
 Recently, distributed computing systems (DCS) are significantly dominated as its flexibility and availability. A DCS is a networking of groups of thousands of servers. Data-intensive crosses the system with the utilization of large number of processors. Assigning tasks efficiently in task scheduling is one of the challenges in distributed systems. An efficient task scheduling can gain the high utilization, low response time with few tasks meet the deadlines in distributed systems, resulting in improving the performance of the distributed systems. 
 
@@ -21,7 +21,7 @@ Figure 1: Task scheduling in a DCS.
 In this work, we model the system with task scheduling problem as a max-sat problem, and translate it into ILP problem. From this translated problem, it is solved by using optimization solvers. The results demonstrate the tasks are assigned optimally on servers in different scenarios.  
 
 
-**Modeling**
+**II. Modeling**
 
 In this section, we model the system as follows.
 
@@ -98,7 +98,7 @@ Do the same with other clauses, the corresponding ILP formulation is:
 
 where the bounds of literals and decision variables are in between 0 and 1.
 
-**Evaluation**
+**III. Evaluation**
 
 In this section, we apply the optimization solvers to solve the problem. We configure a specific scenario to demonstrate how it works [3]. Assume that we have a set of tasks including 5 tasks, which will be assigned to a set of servers including 3 servers as illustrated below.
 
@@ -146,7 +146,7 @@ From the result as above, we can see that the tasks are assigned through the ser
 
 Figure 4: Simulation result
 
-**Conclusion**
+**IV Conclusion**
 
 We first modeled a system with task scheduling problem as a max-sat problem, then translated it into the integer linear programming (ILP) problem. We used the MIP solvers to solve the problem. Simulation results demonstrated that the tasks assigned on servers are optimal in some solvers, leading to the high utilization in distributed systems. 
 
@@ -160,6 +160,8 @@ We first modeled a system with task scheduling problem as a max-sat problem, the
 
 **Source code**
 
+
+**data.dat**
 ``` data.dat
 #data;
 set TASKset := 1 2 3 4 5;
@@ -197,7 +199,7 @@ param: ARCS: COST_ARCS CAP_ARCS:=
 
 ```
 
-
+**model.mod**
 ``` model.mod
 
 set TASKset;
@@ -219,6 +221,7 @@ subject to T_balance{i in TASKset}:
 
 ```
 
+**runscript.run**
 ``` runscript.run
 solve;
 display Total_Cost;
