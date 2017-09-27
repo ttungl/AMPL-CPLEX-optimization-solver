@@ -47,12 +47,13 @@ Figure 2: Modeling of task scheduling on a DCS.
 
 Thus, the objective function of the equivalent ILP can be described as follows.
  
-**Minimize** sum{i in S, j in T} Xij*Tij
+**Minimize** sum{i in S, j in T} Xij * Tij
 
-s.t.
-	sum{j in T} Xij*Tij <= Si, any i in S,
+	s.t.
 
-	sum{i in S} 0 <= Xij <= 1, any j in T.
+		sum{j in T} Xij*Tij <= Si, any i in S,
+
+		sum{i in S} 0 <= Xij <= 1, any j in T.
 
 To demonstrate how to translate a WPMS problem into ILP problem [1], we show an example as below.
 
@@ -119,15 +120,24 @@ Figure 3. An example.
 
 We use an online solver called neos-server [2] to solve the problem. We apply different solvers to solve the same problem, the results are as follows.
 
-Solver 		Gurobi
-assignment  t1 s7: 20
-			t2 s8: 40
-			t3 s6: 30
-			t3 s7: 30
-			t4 s7: 30
-			t4 s8: 50
-			t5 s6: 50
-			t5 s7: 20
+|   Solver   |  Gurobi  | XPRESS-MP|  CPLEX   |  Mosek          |  OOQP    |  
+| :--------: | :------: | :------: | :------: | :-------------: | :------: |
+| Assignment | t1 s7: 20| t1 s6: 20| t1 s7: 20|  t1 s6: 20      |  t1 s6: 4|  
+| 			 | t2 s8: 40| t2 s8: 40| t2 s7: 30|  t2 s6: 10      |  t1 s7: 8|
+| 			 | t3 s6: 30| t3 s7: 10| t2 s8: 10|  t2 s8: 29      |  t1 s8: 6|
+| 			 | t3 s7: 30| t3 s8: 50| t3 s6: 30|  t3 s7: 50      |  t2 s6: 11|
+| 			 | t4 s7: 30| t4 s6: 30| t3 s8: 30|  t3 s8: 10      |  t2 s7: 15|
+| 			 | t4 s8: 50| t4 s7: 50| t4 s6: 50|  t4 s6: 29      |  t2 s8: 13|
+| 			 | t5 s6: 50| t5 s6: 30| t4 s8: 30|  t4 s7: 3.55e-15|  t3 s6: 17|
+| 			 | t5 s7: 20| t5 s7: 40| t5 s7: 50|  t4 s8: 50      |  t3 s7: 22|
+| 			 |          |          | t5 s8: 20|  t5 s6: 20      |  t3 s8: 20|
+| 			 |          |          |          |  t5 s7: 50      |  t4 s6: 24|
+| 			 |          |          |          |                 |  t4 s7: 28|
+| 			 |          |          |          |                 |  t4 s8: 26|
+| 			 |          |          |          |                 |  t5 s6: 21|
+| 			 |          |          |          |                 |  t5 s7: 25|
+| 			 |          |          |          |                 |  t5 s8: 23|
+
 			    
 From the result as above, we can see that the tasks are assigned through the servers in different ways and it depends on the solving capability of each solver, yielding the different results. The less number of pairs utilized implicates the high utilization with low cost for assignments. 
 
@@ -148,5 +158,74 @@ We first modeled a system with task scheduling problem as a max-sat problem, the
 
 [3] www.ampl.com 
 
+**Source code**
+
+``` data.dat
+#data;
+set TASKset := 1 2 3 4 5;
+set SERVERset := 6 7 8;
+# source #total 270
+param T_supply :=
+1 20,
+2 40,
+3 60,
+4 80,
+5 70;
+#sink #total 270
+param S_demand :=
+6 80,
+7 100,
+8 90;
+# link capacity
+param: ARCS: COST_ARCS CAP_ARCS:=
+1,6	10	50
+1,7	10	50
+1,8	10	50
+2,6	10	50
+2,7	10	50
+2,8	10	50
+3,6	10	50
+3,7	10	50
+3,8	10	50
+4,6	10	50
+4,7	10	50
+4,8	10	50
+5,6	10	50
+5,7	10	50
+5,8	10	50
+;
+
+```
 
 
+``` model.mod
+
+set TASKset;
+set SERVERset;
+set ARCS within {TASKset cross SERVERset};
+param T_supply {TASKset} >=0;
+param S_demand {SERVERset} >=0;
+set ARCS_ED := {i in TASKset, j in SERVERset: (i,j) in ARCS};
+param COST_ARCS {ARCS} >=0;
+param CAP_ARCS {ARCS} >=0;
+var T_assign {(i,j) in ARCS_ED} >=0, <= CAP_ARCS[i,j];
+# objective function
+minimize Total_Cost:
+	sum {(i,j) in ARCS} COST_ARCS[i,j]*T_assign[i,j];
+subject to S_balance{j in SERVERset}:
+	sum {(i,j) in ARCS_ED} T_assign[i,j] = S_demand[j];
+subject to T_balance{i in TASKset}:
+	sum {(i,j) in ARCS_ED} T_assign[i,j] = T_supply[i];
+
+```
+
+``` runscript.run
+solve;
+display Total_Cost;
+display T_assign;
+for {(i,j) in ARCS} {	
+	if T_assign[i,j]>0 then {
+		printf "T_assign: t%d s%d: %d\n", i, j, T_assign[i,j];	
+	}		
+}
+```
