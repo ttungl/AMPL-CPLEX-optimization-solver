@@ -35,10 +35,11 @@ A clause C is a disjunction of literals. A weighted clause is a pair (C, w) wher
 
 We have the weighted partial max-sat (WPMS) formula: 
 
-\alpha = {(C1,w1), …, (Cn,wn)}
+alpha = {(C1,w1), …, (Cn,wn)}
 
-For max-sat problem, it is defined as I{(C1,w1), …, (Cn,wn)} =  
-The optimal cost is: cost() = {I() | I: var() -> {0,1}}, where var(\alpha) -> {0,1} is a function of a truth assignment for . Thus, a WPMS problem is to find an optimal assignment.
+For max-sat problem, it is defined as I{(C1,w1), …, (Cn,wn)} = sum{i=1,n} wi(1-I(Ci))
+
+The optimal cost is: cost(alpha) = {I(alpha) | I: var(alpha) -> {0,1}}, where var(alpha) -> {0,1} is a function of a truth assignment for alpha. Thus, a WPMS problem is to find an optimal assignment.
 
 <img width="550" src="https://github.com/ttungl/AMPL-CPLEX-optimization-solver/blob/master/images/ampl2.png">
 
@@ -46,34 +47,36 @@ Figure 2: Modeling of task scheduling on a DCS.
 
 Thus, the objective function of the equivalent ILP can be described as follows.
  
-Minimize 
-
+Minimize sum{i in S, j in T} Xij*Tij
+s.t.
+	sum{j in T} Xij*Tij <= Si, any i in S,
+	sum{i in S} 0 <= Xij <= 1, any j in T.
 
 To demonstrate how to translate a WPMS problem into ILP problem [1], we show an example as below.
 
 A given WPMS problem:
-{ (x1x2, 4), (x1x2, 9), (x1x2, ), (x1x2, ) }
+{(x1 v x2, 4), (x1 v <- x2, 9), (<-x1 v x2, inf), (<-x1 v <-x2, inf)}
 
 Then we transform into conjunctive normal form (CNF) and bi is a decision variable. 
 
-ILP({CNF(b1  (x1x2))}) 
-= ILP({CNF(b1  (x1x2), CNF((x1x2)  b1)}) 
-= ILP({(x1x2b1), (x1b1), (x2b1)})
+ILP({CNF(<-b1 <-> (x1 v x2))}) 
+= ILP({CNF(<-b1 -> (x1 v x2), CNF((x1 v x2) -> <- b1)}) 
+= ILP({(x1 v x2 v b1), (<-x1 v <-b1), (<-x2 v <-b1)})
 = {(x1+x2+b1>0), ((1-x1)+(1-b1)>0), ((1-x2)+(1-b2)>0)} 
 = {(x1+x2+b1>0), (-x1-b1 > -2), -x2-b2 > -2)}
 
 Do the same with other clauses, the corresponding ILP formulation is:
 
-Minimize 4.b1 + 9.b2
+Minimize 4*b1 + 9*b2
 s.t.  
-x1+x2+b1>0   
-  -x1-b1>-2
-  -x2-b1>-2
-x1-x2+b2>0
-  -x1-b2>-2
-  x2-b2>-1
--x1+x2>-1
--x1-x2>-2
+	x1+x2+b1>0   
+	  -x1-b1>-2
+	  -x2-b1>-2
+	x1-x2+b2>0
+	  -x1-b2>-2
+	  x2-b2>-1
+	-x1+x2>-1
+	-x1-x2>-2
 
 where the bounds of literals and decision variables are in between 0 and 1.
 
@@ -84,6 +87,18 @@ In this section, we apply the optimization solvers to solve the problem. We conf
 <img width="350" src="https://github.com/ttungl/AMPL-CPLEX-optimization-solver/blob/master/images/ampl3.png">
 
 Figure 3. An example.
+
+|                 |  t1  |  t2  | t3   | t4   | t5   |
+| :-------------: | :--: | :--: | :--: | :--: | :--: |
+| completion time |  20  |  40  |  60  |  80  |  70  |
+
+
+
+|         |  s6  |  s7  | s8   | 
+| :-----: | :--: | :--: | :--: | 
+| weight  |  80  |  100 |  90  | 
+
+
 
 We use an online solver called neos-server [2] to solve the problem. We apply different solvers to solve the same problem, the results are as follows.
 
