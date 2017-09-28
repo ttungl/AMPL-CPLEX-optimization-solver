@@ -43,7 +43,9 @@ For max-sat problem, it is defined as:
 
 The optimal cost is: 
 
-	cost(alpha) = {I(alpha) | I: var(alpha) -> {0,1}}, where var(alpha) -> {0,1} is a function of a truth assignment for alpha. Thus, a WPMS problem is to find an optimal assignment.
+	cost(alpha) = {I(alpha) | I: var(alpha) -> {0,1}}, 
+	
+	where var(alpha) -> {0,1} is a function of a truth assignment for alpha. Thus, a WPMS problem is to find an optimal assignment.
 
 <img width="550" src="https://github.com/ttungl/AMPL-CPLEX-optimization-solver/blob/master/images/ampl2.png">
 
