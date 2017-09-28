@@ -47,7 +47,7 @@ Figure 2: Modeling of task scheduling on a DCS.
 
 Thus, the objective function of the equivalent ILP can be described as follows.
  
-**Minimize** sum{i in S, j in T} Xij * Tij
+	**Minimize** sum{i in S, j in T} Xij * Tij
 
 	s.t.
 
@@ -59,11 +59,11 @@ To demonstrate how to translate a WPMS problem into ILP problem [1], we show an 
 
 A given WPMS problem:
 
-{(x1 v x2, 4), (x1 v <- x2, 9), (<-x1 v x2, inf), (<-x1 v <-x2, inf)}
+	{(x1 v x2, 4), (x1 v <- x2, 9), (<-x1 v x2, inf), (<-x1 v <-x2, inf)}
 
 Then we transform into conjunctive normal form (CNF) and bi is a decision variable. 
 
-ILP({CNF(<-b1 <-> (x1 v x2))}) 
+	ILP({CNF(<-b1 <-> (x1 v x2))}) 
 
 	= ILP({CNF(<-b1 -> (x1 v x2), CNF((x1 v x2) -> <- b1)}) 
 
@@ -75,7 +75,7 @@ ILP({CNF(<-b1 <-> (x1 v x2))})
 
 Do the same with other clauses, the corresponding ILP formulation is:
 
-**Minimize** 4 * b1 + 9 * b2
+	**Minimize** 4 * b1 + 9 * b2
 	
 	s.t.
 
