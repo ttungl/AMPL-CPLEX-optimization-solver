@@ -27,19 +27,23 @@ In this section, we model the system as follows.
 
 Let T be a set of tasks `T = {T1, T2, …, Tn}` that needs to be assigned on servers. Each `Ti` is a completion time associated with its task `i`.  
 
-Let S be a set of servers `S = {S1, S2, …, Sm}` as a resource that is utilized by tasks assignment. Each `S_{i}` corresponds to the accessing time (deadline) on each server `i`.
+Let S be a set of servers `S = {S1, S2, …, Sm}` as a resource that is utilized by tasks assignment. Each `Si` corresponds to the accessing time (deadline) on each server `i`.
 
-Let `X_{ij}` be a literal or a boolean variable denoting whether task `i` is assigned on server `j` or not. Xij is either `0` and `1`. 
+Let `Xij` be a literal or a boolean variable denoting whether task `i` is assigned on server `j` or not. `Xij` is either `0` and `1`. 
 
-A clause C is a disjunction of literals. A weighted clause is a pair (C, w) where C is a clause and w is a number (soft) or an infinity number (hard) indicating the penalty for falsifying the clause C. In our work, we can consider w as the tasks’ completion time.  
+A clause `C` is a disjunction of literals. A weighted clause is a pair `(C, w)` where `C` is a clause and `w` is a number (soft) or an infinity number (hard) indicating the penalty for falsifying the clause `C`. In our work, we can consider `w` as the tasks’ completion time.  
 
 We have the weighted partial max-sat (WPMS) formula: 
 
-alpha = {(C1,w1), …, (Cn,wn)}
+	alpha = {(C1,w1), …, (Cn,wn)}
 
-For max-sat problem, it is defined as I{(C1,w1), …, (Cn,wn)} = sum{i=1,n} wi(1-I(Ci))
+For max-sat problem, it is defined as:
+	
+	I{(C1,w1), …, (Cn,wn)} = sum{i=1,n} wi(1-I(Ci))
 
-The optimal cost is: cost(alpha) = {I(alpha) | I: var(alpha) -> {0,1}}, where var(alpha) -> {0,1} is a function of a truth assignment for alpha. Thus, a WPMS problem is to find an optimal assignment.
+The optimal cost is: 
+
+	cost(alpha) = {I(alpha) | I: var(alpha) -> {0,1}}, where var(alpha) -> {0,1} is a function of a truth assignment for alpha. Thus, a WPMS problem is to find an optimal assignment.
 
 <img width="550" src="https://github.com/ttungl/AMPL-CPLEX-optimization-solver/blob/master/images/ampl2.png">
 
@@ -61,7 +65,7 @@ A given WPMS problem:
 
 	{(x1 v x2, 4), (x1 v <- x2, 9), (<-x1 v x2, inf), (<-x1 v <-x2, inf)}
 
-Then we transform into conjunctive normal form (CNF) and bi is a decision variable. 
+Then we transform into `conjunctive normal form (CNF)` and `bi` is a decision variable. 
 
 	ILP({CNF(<-b1 <-> (x1 v x2))}) 
 
@@ -96,11 +100,11 @@ Do the same with other clauses, the corresponding ILP formulation is:
 		-x1-x2>-2
 
 
-where the bounds of literals and decision variables are in between 0 and 1.
+where the bounds of literals and decision variables are in between `0` and `1`.
 
 **III. Evaluation**
 
-In this section, we apply the optimization solvers to solve the problem. We configure a specific scenario to demonstrate how it works [3]. Assume that we have a set of tasks including 5 tasks, which will be assigned to a set of servers including 3 servers as illustrated below.
+In this section, we apply the optimization solvers to solve the problem. We configure a specific scenario to demonstrate how it works [3]. Assume that we have a set of tasks including `5 tasks`, which will be assigned to a set of servers including `3 servers` as illustrated below.
 
 <img width="350" src="https://github.com/ttungl/AMPL-CPLEX-optimization-solver/blob/master/images/ampl3.png">
 
