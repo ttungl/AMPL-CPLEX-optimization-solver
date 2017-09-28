@@ -148,7 +148,7 @@ Figure 4: Simulation result
 
 **IV Conclusion**
 
-We first modeled a system with task scheduling problem as a max-sat problem, then translated it into the integer linear programming (ILP) problem. We used the MIP solvers to solve the problem. Simulation results demonstrated that the tasks assigned on servers are optimal in some solvers, leading to the high utilization in distributed systems. 
+We first modeled a system with task scheduling problem as a max-sat problem, then translated it into the integer linear programming (ILP) problem. We used the MIP solvers to solve the problem. Simulation results demonstrated that the tasks assigned on servers are optimal in several solvers (Gurobi, Xpress, CPLEX), leading to the high utilization in distributed systems. 
 
 **References**
 
