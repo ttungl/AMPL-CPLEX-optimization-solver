@@ -25,11 +25,11 @@ In this work, we model the system with task scheduling problem as a max-sat prob
 
 In this section, we model the system as follows.
 
-Let T be a set of tasks T = {T1, T2, …, Tn} that needs to be assigned on servers. Each Ti is a completion time associated with its task i.  
+Let T be a set of tasks `T = {T1, T2, …, Tn}` that needs to be assigned on servers. Each `Ti` is a completion time associated with its task `i`.  
 
-Let S be a set of servers S = {S1, S2, …, Sm} as a resource that is utilized by tasks assignment. Each Si corresponds to the accessing time (deadline) on each server i.
+Let S be a set of servers `S = {S1, S2, …, Sm}` as a resource that is utilized by tasks assignment. Each `S_{i}` corresponds to the accessing time (deadline) on each server `i`.
 
-Let Xij be a literal or a boolean variable denoting whether task i is assigned on server j or not. Xij is either 0 and 1. 
+Let `X_{ij}` be a literal or a boolean variable denoting whether task `i` is assigned on server `j` or not. Xij is either `0` and `1`. 
 
 A clause C is a disjunction of literals. A weighted clause is a pair (C, w) where C is a clause and w is a number (soft) or an infinity number (hard) indicating the penalty for falsifying the clause C. In our work, we can consider w as the tasks’ completion time.  
 
