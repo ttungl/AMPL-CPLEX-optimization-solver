@@ -25,7 +25,7 @@ In this work, we model the system with task scheduling problem as a max-sat prob
 
 In this section, we model the system as follows.
 
-Let T be a set of tasks `T = {T1, T2, …, Tn}` that needs to be assigned on servers. Each `Ti` is a completion time associated with its task `i`.  
+Let `T` be a set of tasks `T = {T1, T2, …, Tn}` that needs to be assigned on servers. Each `Ti` is a completion time associated with its task `i`.  
 
 Let S be a set of servers `S = {S1, S2, …, Sm}` as a resource that is utilized by tasks assignment. Each `Si` corresponds to the accessing time (deadline) on each server `i`.
 
