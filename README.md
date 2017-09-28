@@ -53,7 +53,7 @@ Figure 2: Modeling of task scheduling on a DCS.
 
 Thus, the objective function of the equivalent ILP can be described as follows.
  
-	**Minimize** sum{i in S, j in T} Xij * Tij
+	MINIMIZE sum{i in S, j in T} Xij * Tij
 
 	s.t.
 
@@ -81,7 +81,7 @@ Then we transform into `conjunctive normal form (CNF)` and `bi` is a decision va
 
 Do the same with other clauses, the corresponding ILP formulation is:
 
-	**Minimize** 4 * b1 + 9 * b2
+	MINIMIZE 4 * b1 + 9 * b2
 	
 	s.t.
 
