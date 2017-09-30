@@ -4,8 +4,10 @@
 		ttungl at gmail dot com
 
 **Claims**
-This is one of my projects in Operating System course (CSCE 555). If you use this material, please cite the link below. It'd be appreciated.
-		https://github.com/ttungl/AMPL-CPLEX-optimization-solver
+
+	This is one of my projects in Operating System course (CSCE 555). If you use this material, please cite the link below. It'd be appreciated.
+	
+	https://github.com/ttungl/AMPL-CPLEX-optimization-solver
 		
 ---
 
