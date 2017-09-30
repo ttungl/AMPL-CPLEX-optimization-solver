@@ -5,7 +5,7 @@
 
 **Claims**
 
-	This is one of my projects in Operating System course (CSCE 555). If you use this material, please cite the link below. It'd be appreciated.
+	This is one of my research projects. If you use this material, please cite the link below, It'd be appreciated.
 	
 	https://github.com/ttungl/AMPL-CPLEX-optimization-solver
 		
